@@ -3,7 +3,6 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 interface detailProps {
   postTitle: string;
-  postDescription: string;
 }
 
 
@@ -17,9 +16,9 @@ const PublishDialog = ({
   
   return (
     <>
-      <div className="flex flex-col gap-4 w-full bg-black text-white">
+      <div className="flex flex-col gap-4 w-full">
         <form className="flex flex-col gap-4 w-full">
-          <Label htmlFor="postTtitle" className="font-saira uppercase">Post Title</Label>
+          <Label htmlFor="postTtitle" className="font-saira uppercase text-black">Post Title</Label>
           <Input
             className="rounded-none border border-gray-600 text-md focus:border-none"
             type="postTtitle"
@@ -27,13 +26,13 @@ const PublishDialog = ({
             value={details.postTitle}
             onChange={(e) => handler("postTitle", e.target.value)}
           ></Input>
-          <Label htmlFor="" className="text-white uppercase font-saira">Subtitle</Label>
+          {/* <Label htmlFor="" className="text-black uppercase font-saira">Subtitle</Label>
           <textarea
-            className="p-3 focus:outline-none border bg-black text-slate-100 font-saira border-gray-600"
+            className="p-3 focus:outline-none border  text-slate-100 font-saira border-gray-600"
             required
             value={details.postDescription}
             onChange={(e) => handler("postDescription", e.target.value)}
-          ></textarea>
+          ></textarea> */}
           
         </form>
       </div>

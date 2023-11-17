@@ -9,7 +9,6 @@ const BlogItem: React.FC<BlogItemProps> = ({ item, handlers }) => {
     case "Title":
       return (
         <>
-          {console.log("---",item.content)}
           <p
             className={clsx(`outline-none  text-5xl md:text-6xl font-extrabold  capitalize border-y-0 focus:outline-none w-full pl-2 focus:border-2 ${(mode==="dark")?"hover:bg-gray-800":"hover:bg-gray-200"} font-saira py-4 border-l-[2px] border-l-white`,{
               "text-white":(mode==="dark"),
@@ -39,7 +38,7 @@ const BlogItem: React.FC<BlogItemProps> = ({ item, handlers }) => {
     case "Description":
       return (
         <>
-          <div className={`flex w-full text-white font-saira hover:bg-gray-800 py-4 ${(mode==="dark")?"hover:bg-gray-800":"hover:bg-gray-200"}  `}>
+          <div className={`flex w-full text-white font-saira hover:bg-gray-200 py-4 ${(mode==="dark")?"hover:bg-gray-200":"hover:bg-gray-200"}  `}>
             <p
               className={clsx(`text-md w-full border-transparent  focus:outline-none resize-none focus:border-l-2 focus:border-gray-400 pl-2  h-auto font-saira text-xl tracking-wide border-l-[2px] border-l-white `,{
                 "text-white":(mode==="dark"),
@@ -49,36 +48,11 @@ const BlogItem: React.FC<BlogItemProps> = ({ item, handlers }) => {
               contentEditable={true}
               onBlur={(e) => handlers?.onChangeHandler(e)}
               dangerouslySetInnerHTML={{ __html: item.content }}
-              // {makeBold(item.content)}
               style={{ whiteSpace: 'pre-wrap' }}
             />
           </div>
         </>
       );
-    // case "Blog Info":
-      // return (
-      //   <>
-      //     <div className="py-3 w-full">
-      //       <div className="flex gap-6">
-      //         <Avatar>
-      //           <AvatarImage
-      //             src={
-      //               (item.content.author && item.content.author.avatarUrl) || ""
-      //             }
-      //             className="w-10 h-10 rounded-full"
-      //           />
-      //         </Avatar>
-      //         <div>
-      //           <p className="text-md text-white font-saira text-xl">
-      //             {(item.content.author && item.content.author.name) || ""}
-      //           </p>
-      //           <p className=" text-white font-saira text-lg">{item.content.date}</p>
-      //         </div>
-      //       </div>
-      //     </div>
-      //     <Separator className="my-4" />
-      //   </>
-      // );
     case "Image":
       return (
         <div className={clsx(`w-full flex  flex-col justify-center  py-4 ${(mode==="dark")?"hover:bg-gray-800":"hover:bg-gray-200"}  `)}>
@@ -153,7 +127,7 @@ const BlogItem: React.FC<BlogItemProps> = ({ item, handlers }) => {
      
       return (
         <>
-        <div className={`flex w-full text-white font-saira hover:bg-gray-800 py-4 ${(mode==="dark")?"hover:bg-gray-800":"hover:bg-gray-200"}  `}>
+        <div className={`flex w-full  font-saira hover:bg-gray-300 py-4 ${(mode==="dark")?"hover:bg-gray-800":"hover:bg-gray-200"}  `}>
           <p
             className={clsx(`text-md w-full border-transparent list-disc  focus:outline-none resize-none focus:border-l-2 focus:border-gray-400 pl-2  h-auto font-saira text-xl tracking-wide border-l-[2px] border-l-white `,{
               "text-white":(mode==="dark"),

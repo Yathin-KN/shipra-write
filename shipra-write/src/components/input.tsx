@@ -24,7 +24,7 @@ export const Inp = ({index}:{index:number}) => {
     };
 
     return<div className='w-full relative'>
-         <span className='absolute top-4 right-4'>
+         <span className='absolute top-4 right-4 text-xs'>
             {index}
          </span>
          <BlogItem item={titleJson} handlers={{

@@ -31,7 +31,7 @@ const Bullet = ({ index }: { index: number }) => {
 
   return (
     <div className="w-full relative h-auto">
-      <span className="absolute top-4 right-4">{index}</span>
+      <span className="absolute top-4 right-4 text-xs">{index}</span>
       <BlogItem
         item={paragrahJson}
         handlers={{

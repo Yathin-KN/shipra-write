@@ -7,6 +7,7 @@ import useBlogStore from "@/store/blog";
 import ImageComponent from "./imageComponent";
 import VideoComponent from "./vedioComponent";
 import { Badge } from "../components/ui/badge";
+import 'react-toastify/dist/ReactToastify.css';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -27,8 +28,8 @@ import {
   XSquare,
 } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
-import { Input } from "@/components/ui/input";
-import { Category } from "@/lib/types";
+// import { Input } from "@/components/ui/input";
+// import { Category } from "@/lib/types";
 import useModeStore from "@/store/mode";
 import clsx from "clsx";
 import Bullet from "@/components/bullet";
@@ -37,9 +38,6 @@ const Write = () => {
   const [compoenent, setComponenet] = useState<any[]>([]);
   const [length, setLength] = useState<number>(0);
   const { blogItems, removeLastBlogItem } = useBlogStore();
-  const [newCategory, setNewCategory] = useState<string>("");
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // const [categoryArray,setCategoryArray]=useState<String[]>([]);
@@ -51,18 +49,18 @@ const Write = () => {
     postDescription: "",
   });
 
-  const handleNewCategoryChange = (e: any) => {
-    setNewCategory(e.target.value);
-  };
-  const handelCategoryChange = () => {
-    setPost((prev: any) => {
-      return { ...prev, categories: selectedCategories };
-    });
-  };
+  // const handleNewCategoryChange = (e: any) => {
+  //   setNewCategory(e.target.value);
+  // };
+  // const handelCategoryChange = () => {
+  //   setPost((prev: any) => {
+  //     return { ...prev, categories: selectedCategories };
+  //   });
+  // };
 
-  useEffect(() => {
-    handelCategoryChange();
-  }, [selectedCategories]);
+  // useEffect(() => {
+  //   handelCategoryChange();
+  // }, [selectedCategories]);
 
   const handlePostChange = (key: string, value: string) => {
     setPost((prev: any) => {
@@ -104,6 +102,10 @@ const Write = () => {
   };
 
   const handleSubmit = async () => {
+    console.log({
+      postDetails: post,
+      content: blogItems,
+    })
     try {
       setIsLoading(true);
       const response = await PTSetPost({
@@ -130,32 +132,9 @@ const Write = () => {
     });
   }, [compoenent]);
 
-  function handleAddCategory(): void {
-    setCategories((prev: any) => {
-      return [
-        ...prev,
-        {
-          categoryId: categories.length,
-          categoryName: newCategory,
-        },
-      ];
-    });
-    setNewCategory("");
-  }
 
-  const handelCategoryClick = (category: Category) => {
-    setSelectedCategories((prev) => {
-      const isCategorySelected = prev.some(
-        (cat) => cat.categoryId === category.categoryId
-      );
 
-      if (isCategorySelected) {
-        return prev.filter((cat) => cat.categoryId !== category.categoryId);
-      } else {
-        return [...prev, category];
-      }
-    });
-  };
+
   const {mode}=useModeStore();
   return (
     <>
@@ -186,12 +165,12 @@ const Write = () => {
               </Badge>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <div className="flex justify-end bg-black text-white rounded-none">
+              <div className="flex justify-end  text-black rounded-none">
                 <AlertDialogCancel className="rounded-none">X</AlertDialogCancel>
               </div>
               <PublishDialog handler={handlePostChange} details={post} />
               <AlertDialogFooter>
-                <div className="flex flex-col gap-4 w-full bg-black text-white font-saira">
+                <div className="flex flex-col gap-4 w-full  text-black font-saira">
                   <Button
                     onClick={handleSubmit}
                     type="submit"
@@ -203,51 +182,6 @@ const Write = () => {
                     ) : null}{" "}
                     Publish
                   </Button>
-                  <div className="flex flex-col flex-wrap">
-                    {selectedCategories ? (
-                      <p className="text-md font-saira text-white uppercase">Selected Categories :</p>
-                    ):(<div className="text-md font-saira text-white uppercase">No Categories selected</div>)}
-                    <div className="flex gap-2 flex-wrap">
-                      {selectedCategories &&
-                        selectedCategories.map((category) => {
-                          return (
-                            <Badge className="text-ms text-white">
-                              {category.categoryName}
-                            </Badge>
-                          );
-                        })}
-                    </div>
-                  </div>
-                  <div className="w-full h-max-[20%] overflow-y-scroll">
-                    {categories &&
-                      categories.map((category) => {
-                        return (
-                          <Badge
-                            className="text-xs font-light font-saira text-white uppercase tracking-wider mx-1 my-1 py-1 cursor-pointer"
-                            variant="outline"
-                            onClick={() => handelCategoryClick(category)}
-                          >
-                            {category.categoryName}{" "}
-                            <span className="ml-1 p-2 max-h-4 max-w-4 text-center flex items-center rounded-full bg-gray-400 text-white text-xs">
-                              <>{category.postCount}</>
-                            </span>
-                          </Badge>
-                        );
-                      })}
-                  </div>
-                  <div className="flex justify-center">
-                    <Input
-                      value={newCategory}
-                      onChange={(e:any) => handleNewCategoryChange(e)}
-                    />
-                    <Button
-                      onClick={() => handleAddCategory()}
-                      value="outline"
-                      className="text-xs ml-4 rounded-none font-saira tracking-wide border border-t-white"
-                    >
-                      <span className="font-saira break-normal">Category +</span>
-                    </Button>
-                  </div>
                 </div>
               </AlertDialogFooter>
             </AlertDialogContent>

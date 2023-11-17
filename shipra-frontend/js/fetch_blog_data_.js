@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         data.forEach(blog => {
           const blogCardItem = document.createElement('div');
+          blogCardItem.setAttribute('role', 'listitem');
           blogCardItem.classList.add('collection-item', 'w-dyn-item', 'w-col', 'w-col-4');
   
           const blogLink = document.createElement('a');
           blogLink.classList.add('link-block', 'w-inline-block');
-          blogLink.href = `blog.html?blog_id=${blog.post_id}`; // Include blog ID in the URL as a query parameter
+          blogLink.href = `blog.html?blog_id=${blog.post_id}`; 
   
           const blogCardWrapper = document.createElement('div');
           blogCardWrapper.classList.add('blog-card_wrapper');
@@ -47,10 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
           blogWrapper.appendChild(blogCardItem);
   
           blogLink.addEventListener('click', event => {
-            event.preventDefault(); // Prevent the default behavior of the anchor tag
+            event.preventDefault(); 
             const urlParams = new URL(blogLink.href);
             const blogId = urlParams.searchParams.get('blog_id');
-            window.location.href = `blog.html?blog_id=${blogId}`; // Redirect to blog details page with blog ID
+            window.location.href = `blog.html?blog_id=${blogId}`; 
           });
         });
       })
