@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cors=require('cors')
+const adminRoutes=require('./routes/admin')
 const app = express();
 const port = 3000; 
 // const ConnectToDb = require("./connect");
@@ -12,6 +13,7 @@ const { getAllPosts } = require('./controllers/getAllPosts');
 const { getPostById } = require('./controllers/getPostByPostId');
 connect_DB();
 
+app.use('/admin', adminRoutes);
 app.get('/', (req, res) => {
     getAllPosts(req,res)
 });

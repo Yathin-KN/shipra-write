@@ -5,7 +5,7 @@ import useBlogStore from "@/store/blog";
 import { Button } from "./ui/button";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
-import axiosClient from "@/apis/axios";
+import axios from "axios";
 
 const ImageComponent = ({ index }: { index: number }) => {
   const [imageJson, setImageJson] = useState<BlogItemProps>({
@@ -39,8 +39,8 @@ const ImageComponent = ({ index }: { index: number }) => {
       formData.append("media", fileData);
       try {
         setIsLoading(true)
-        const response = await axiosClient.post(
-          "admin/createUrl",
+        const response = await axios.post(
+          "http://localhost:3000/admin/createUrl",
           formData,
           {
             headers: {
@@ -80,7 +80,7 @@ const ImageComponent = ({ index }: { index: number }) => {
   };
   return (
     <div className="w-full relative">
-      <span className="absolute top-4 right-4">{index}</span>
+      <span className="absolute top-4 right-4 text-xs">{index}</span>
 
       <ToastContainer toastClassName={() => 
         " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white text-gray-800 text-sm p-4 m-4"
