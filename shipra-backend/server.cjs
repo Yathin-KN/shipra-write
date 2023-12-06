@@ -1,6 +1,9 @@
 
-const express = require('express');
-const cors=require('cors')
+const express =require('express');
+const cors =require('cors');
+// import cors from 'cors';
+// import adminRoutes from './routes/admin';
+
 const adminRoutes=require('./routes/admin')
 const app = express();
 const port = 3000; 
@@ -25,7 +28,7 @@ app.get('/blogs/:post_id', (req, res) => {
   app.post('/addPost',(req,res)=>{
     addPost(req,res);
   })
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
+module.exports = app;
