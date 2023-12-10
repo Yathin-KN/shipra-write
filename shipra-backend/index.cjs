@@ -16,9 +16,11 @@ const { getPostById } = require("./controllers/getPostByPostId");
 const { getAllProducts } = require("./controllers/getAllProducts");
 const { addProduct } = require("./controllers/addProducts");
 const { getProductById } = require("./controllers/getProductByProductId");
+const authRoutes = require('./routes/auth');
 connect_DB();
 
 app.use("/admin", adminRoutes);
+app.use("/auth",authRoutes)
 app.get("/getAllPost", (req, res) => {
   getAllPosts(req, res);
 });
@@ -42,7 +44,7 @@ app.post("/addPost", (req, res) => {
 app.post("/addProduct", (req, res) => {
   addProduct(req, res);
 });
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
 module.exports = app;

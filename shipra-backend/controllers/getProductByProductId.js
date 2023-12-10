@@ -1,4 +1,4 @@
-const Product = require('./../schemas/product');
+const Product = require('./../schemas/products');
 const getProductById = async (req, res) => {
     try {
       const postId = req.params.post_id;
