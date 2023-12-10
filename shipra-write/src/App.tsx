@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       {isLoggedIn ? (
-        <div className="w-screen h-screen flex items-center justify-center">
+        <div className="w-screen  h-auto min-h-screen flex items-center justify-center">
           <Write />
         </div>
       ) : (

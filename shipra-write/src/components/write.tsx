@@ -30,7 +30,7 @@ import {
   Type,
   XSquare,
 } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 // import { Input } from "@/components/ui/input";
 // import { Category } from "@/lib/types";
 import useModeStore from "@/store/mode";
@@ -166,11 +166,11 @@ const Write = () => {
       >
         {/* <MainNav /> */}
       </div>
-      <ToastContainer
+      {/* <ToastContainer
         toastClassName={() =>
           " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white text-gray-800 text-sm p-4 m-4"
         }
-      />
+      /> */}
       <div
         className={clsx(
           "w-full h-auto  min-h-screen  bg-opacity-90  flex justify-center",
