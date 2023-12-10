@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const blogWrapper = document.querySelector('.w-dyn-items');
   
     // Fetch blog data from the server
-    fetch('http://localhost:3000/')
+    fetch('https://shipra-backend.vercel.app/')
       .then(response => response.json())
       .then(data => {
         data.forEach(blog => {

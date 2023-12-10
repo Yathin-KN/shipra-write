@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     
     if (blogId) {
-        fetch(`http://localhost:3000/blogs/${blogId}`)
+        fetch(`https://shipra-backend.vercel.app/blogs/${blogId}`)
             .then(response => response.json())
             .then(blog => {
               
