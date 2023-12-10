@@ -7,7 +7,9 @@ import useBlogStore from "@/store/blog";
 import ImageComponent from "./imageComponent";
 import VideoComponent from "./vedioComponent";
 import { Badge } from "../components/ui/badge";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -17,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import PublishDialog from "./publishDialog";
 import PTSetPost from "../apis/addPost";
+import PTSetProduct from "@/apis/addProduct";
 import {
   AlignJustify,
   HeadingIcon,
@@ -35,6 +38,7 @@ import clsx from "clsx";
 import Bullet from "@/components/bullet";
 
 const Write = () => {
+  const [which, setWhich] = useState<"product" | "post">("post");
   const [compoenent, setComponenet] = useState<any[]>([]);
   const [length, setLength] = useState<number>(0);
   const { blogItems, removeLastBlogItem } = useBlogStore();
@@ -42,7 +46,9 @@ const Write = () => {
 
   // const [categoryArray,setCategoryArray]=useState<String[]>([]);
 
- 
+  const handelToggle = (str:any) => {
+    setWhich(() => str);
+  };
 
   const [post, setPost] = useState({
     postTitle: "",
@@ -91,39 +97,56 @@ const Write = () => {
       });
     } else if (name === "save") {
       console.log(blogItems);
-    } else if(name==="Bullet"){
+    } else if (name === "Bullet") {
       setComponenet((prev: any) => {
-        return [...prev, <Bullet index={length}/>];
+        return [...prev, <Bullet index={length} />];
       });
-    }else{
+    } else {
       setComponenet((prev: any) => prev.slice(0, -1));
       removeLastBlogItem();
     }
   };
 
   const handleSubmit = async () => {
-    console.log({
-      postDetails: post,
-      content: blogItems,
-    })
-    try {
-      setIsLoading(true);
-      const response = await PTSetPost({
-        postDetails: post,
-        content: blogItems,
-      });
-      toast.success("Successfully posted !!!",{
-        delay:1500
-      });
-      console.log(response);
-    } catch (error) {
-      console.log("error : ", error);
-      toast.error("Error posting !!!",{
-        delay:1500
-      });
-    } finally {
-      setIsLoading(false);
-    }
+     if(which==="post"){
+      try {
+        setIsLoading(true);
+        const response = await PTSetPost({
+          postDetails: post,
+          content: blogItems,
+        });
+        toast.success("Successfully posted !!!", {
+          delay: 1500,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log("error : ", error);
+        toast.error("Error posting !!!", {
+          delay: 1500,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+     }else{
+      try {
+        setIsLoading(true);
+        const response = await PTSetProduct({
+          postDetails: post,
+          content: blogItems,
+        });
+        toast.success("Successfully posted !!!", {
+          delay: 1500,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log("error : ", error);
+        toast.error("Error posting !!!", {
+          delay: 1500,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+     }
   };
   useEffect(() => {
     setLength(() => {
@@ -132,29 +155,40 @@ const Write = () => {
     });
   }, [compoenent]);
 
-
-
-
-  const {mode}=useModeStore();
+  const { mode } = useModeStore();
   return (
     <>
-      <div className={clsx({
-            "bg-white":(mode==="light"),
-             "bg-black":(mode==="dark"),
-        })}>
-      {/* <MainNav /> */}
+      <div
+        className={clsx({
+          "bg-white": mode === "light",
+          "bg-black": mode === "dark",
+        })}
+      >
+        {/* <MainNav /> */}
       </div>
-      <ToastContainer toastClassName={() => 
-        " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white text-gray-800 text-sm p-4 m-4"
-      }/>
-      <div className={clsx("w-full h-auto  min-h-screen  bg-opacity-90  flex justify-center",{
-            "bg-white":(mode==="light"),
-             "bg-black":(mode==="dark"),
-        })}>
-        <div className={clsx("md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10 mt-[50px] mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",{
-            "bg-white":(mode==="light"),
-             "bg-black":(mode==="dark"),
-        })}>
+      <ToastContainer
+        toastClassName={() =>
+          " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white text-gray-800 text-sm p-4 m-4"
+        }
+      />
+      <div
+        className={clsx(
+          "w-full h-auto  min-h-screen  bg-opacity-90  flex justify-center",
+          {
+            "bg-white": mode === "light",
+            "bg-black": mode === "dark",
+          }
+        )}
+      >
+        <div
+          className={clsx(
+            "md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10 mt-[50px] mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",
+            {
+              "bg-white": mode === "light",
+              "bg-black": mode === "dark",
+            }
+          )}
+        >
           <AlertDialog>
             <AlertDialogTrigger>
               <Badge
@@ -166,9 +200,12 @@ const Write = () => {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <div className="flex justify-end  text-black rounded-none">
-                <AlertDialogCancel className="rounded-none">X</AlertDialogCancel>
+                <AlertDialogCancel className="rounded-none">
+                  X
+                </AlertDialogCancel>
               </div>
               <PublishDialog handler={handlePostChange} details={post} />
+              <div>The modal will be added to : {which}</div>
               <AlertDialogFooter>
                 <div className="flex flex-col gap-4 w-full  text-black font-saira">
                   <Button
@@ -182,7 +219,12 @@ const Write = () => {
                     ) : null}{" "}
                     Publish
                   </Button>
+                  <ToggleGroup type="single">
+                  <ToggleGroupItem value="product" onClick={()=>handelToggle("product")}>product</ToggleGroupItem>
+                  <ToggleGroupItem value="post"  onClick={()=>handelToggle("post")}>post</ToggleGroupItem>
+                </ToggleGroup>
                 </div>
+                
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -193,12 +235,17 @@ const Write = () => {
               })}
           </div>
 
-          <div className={clsx("sm:hidden fixed bottom-0 left-0 w-full py-2  border border-white  flex justify-evenly md:flex md:justify-around items-center",{
-            "bg-white":(mode==="light"),
-             "bg-black":(mode==="dark"),
-             "text-white":(mode==="dark"),
-             "text-black":(mode==="light")
-        })}>
+          <div
+            className={clsx(
+              "sm:hidden fixed bottom-0 left-0 w-full py-2  border border-white  flex justify-evenly md:flex md:justify-around items-center",
+              {
+                "bg-white": mode === "light",
+                "bg-black": mode === "dark",
+                "text-white": mode === "dark",
+                "text-black": mode === "light",
+              }
+            )}
+          >
             <Button
               onClick={() => handleClick("title")}
               className="border-none shadow-none p-2"
@@ -207,7 +254,7 @@ const Write = () => {
             >
               <Type size={28} strokeWidth={1} />
             </Button>
-           
+
             <Button
               onClick={() => handleClick("subtitle")}
               name="subtitle"
