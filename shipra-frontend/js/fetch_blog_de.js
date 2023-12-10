@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const blogWrapper = document.querySelector('.w-dyn-items');
   
-    fetch('https://shipra-backend.vercel.app/')
+    fetch('https://shipra-backend-yathin-kn.vercel.app/getAllPost')
       .then(response => response.json())
       .then(data => {
         data.forEach(blog => {

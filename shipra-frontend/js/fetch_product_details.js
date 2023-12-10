@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const blogWrapper = document.querySelector('.w-dyn-items');
   
-    // Fetch blog data from the server
-    fetch('https://shipra-backend-yathin-kn.vercel.app/getAllPost')
+    fetch('https://shipra-backend-yathin-kn.vercel.app/getAllProducts/')
       .then(response => response.json())
       .then(data => {
         data.forEach(blog => {
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
           const blogLink = document.createElement('a');
           blogLink.classList.add('link-block', 'w-inline-block');
-          blogLink.href = `blog.html?blog_id=${blog.post_id}`; 
+          blogLink.href = `product.html?blog_id=${blog.post_id}`; 
   
           const blogCardWrapper = document.createElement('div');
           blogCardWrapper.classList.add('blog-card_wrapper');
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); 
             const urlParams = new URL(blogLink.href);
             const blogId = urlParams.searchParams.get('blog_id');
-            window.location.href = `blog.html?blog_id=${blogId}`; 
+            window.location.href = `product.html?blog_id=${blogId}`; 
           });
         });
       })
