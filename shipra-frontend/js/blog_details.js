@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const blogId = urlParams.get('blog_id');
   
-    
+    const hey="hello"
     if (blogId) {
         fetch(`https://shipra-backend-yathin-kn.vercel.app/blogs/${blogId}`)
             .then(response => response.json())
