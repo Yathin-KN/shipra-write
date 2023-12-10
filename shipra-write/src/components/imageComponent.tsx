@@ -40,7 +40,7 @@ const ImageComponent = ({ index }: { index: number }) => {
       try {
         setIsLoading(true)
         const response = await axios.post(
-          "http://localhost:3000/admin/createUrl",
+          "https://shipra-backend.vercel.app/admin/createUrl",
           formData,
           {
             headers: {
