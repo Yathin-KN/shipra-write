@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Write from './components/write';
-import { signIn } from './apis/signin';
+import {signIn} from './apis/signin';
 import { Loader2 } from 'lucide-react';
 
 function App() {
