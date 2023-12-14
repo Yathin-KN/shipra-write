@@ -1,16 +1,43 @@
-import { useState } from 'react';
+import {useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Write from './components/write';
-import {signIn} from './apis/signIn';
+import {signIn} from './apis/signin';
 //hrllo
 import { Loader2 } from 'lucide-react';
+const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
+  const handleClick = (type:any) => {
+    onCardClick(type);
+  };
+
+  return (
+    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="flex space-x-4">
+      <div className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" onClick={() => handleClick('product')}>
+        Project
+      </div>
+      <div className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" onClick={() => handleClick('post')}>
+        Blog
+      </div>
+      <div className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" onClick={() => handleClick('blog')}>
+        Product
+      </div>
+    </div>
+  </div>
+  );
+};
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading,setIsLoading]=useState<boolean>(false);
+  const [selectedCard, setSelectedCard] = useState('');
+  
+  const handleCardClick = (type: any) => {
+    setSelectedCard(type);
+  };
+
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error('Please provide both email and password.');
@@ -41,7 +68,11 @@ function App() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       {isLoggedIn ? (
         <div className="w-screen  h-auto min-h-screen flex items-center justify-center">
-          <Write />
+          {selectedCard ? (
+          <Write selectedCard={selectedCard} />
+        ) : (
+          <ProductPost onCardClick={handleCardClick} />
+        )}
         </div>
       ) : (
         <div className="max-w-md w-full space-y-8">

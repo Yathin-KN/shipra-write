@@ -8,7 +8,7 @@ import ImageComponent from "./imageComponent";
 import VideoComponent from "./vedioComponent";
 import { Badge } from "../components/ui/badge";
 import "react-toastify/dist/ReactToastify.css";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+// import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import {
   AlertDialog,
@@ -37,8 +37,8 @@ import useModeStore from "@/store/mode";
 import clsx from "clsx";
 import Bullet from "@/components/bullet";
 
-const Write = () => {
-  const [which, setWhich] = useState<"product" | "post">("post");
+const Write = ({selectedCard}:{selectedCard:any}) => {
+  const [which, _] = useState<"product" | "post">(selectedCard);
   const [compoenent, setComponenet] = useState<any[]>([]);
   const [length, setLength] = useState<number>(0);
   const { blogItems, removeLastBlogItem } = useBlogStore();
@@ -46,9 +46,9 @@ const Write = () => {
 
   // const [categoryArray,setCategoryArray]=useState<String[]>([]);
 
-  const handelToggle = (str:any) => {
-    setWhich(() => str);
-  };
+  // const handelToggle = (str:any) => {
+  //   setWhich(() => str);
+  // };
 
   const [post, setPost] = useState({
     postTitle: "",
@@ -219,10 +219,10 @@ const Write = () => {
                     ) : null}{" "}
                     Publish
                   </Button>
-                  <ToggleGroup type="single">
+                  {/* <ToggleGroup type="single">
                   <ToggleGroupItem value="product" onClick={()=>handelToggle("product")}>product</ToggleGroupItem>
                   <ToggleGroupItem value="post"  onClick={()=>handelToggle("post")}>post</ToggleGroupItem>
-                </ToggleGroup>
+                </ToggleGroup> */}
                 </div>
                 
               </AlertDialogFooter>
