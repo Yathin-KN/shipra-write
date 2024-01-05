@@ -16,11 +16,20 @@ const { getPostById } = require("./controllers/getPostByPostId");
 const { getAllProducts } = require("./controllers/getAllProducts");
 const { addProduct } = require("./controllers/addProducts");
 const { getProductById } = require("./controllers/getProductByProductId");
-const authRoutes = require('./routes/auth');
+const authRoutes = require("./routes/auth");
+const {
+  createOrUpdateDropdownItems,
+} = require("./controllers/updateDrowpdown1");
+const { getAllDropdownItems, getDropdownItemsAsFunction } = require("./controllers/getDropdown");
+const { createNewProduct } = require("./controllers/addNewProducts");
+const { getAllNewProducts, getAllNewProductsAPI } = require("./controllers/getAllNewProducts");
+const { create } = require("./schemas/video");
+const { createVideo } = require("./controllers/addVideoCard");
 connect_DB();
 
+console.log(getAllNewProducts())
 app.use("/admin", adminRoutes);
-app.use("/auth",authRoutes)
+app.use("/auth", authRoutes);
 app.get("/getAllPost", (req, res) => {
   getAllPosts(req, res);
 });
@@ -44,7 +53,196 @@ app.post("/addPost", (req, res) => {
 app.post("/addProduct", (req, res) => {
   addProduct(req, res);
 });
+
+app.post("/updateDropDown", (req, res) => {
+  createOrUpdateDropdownItems(req, res);
+});
+
+app.get("/getDropdown",(req,res)=>{
+  getAllDropdownItems(req,res);
+})
+
+{/* <div class="dropdown">
+<a href="#">New Construction Projects</a> */}
+function generateDropdownHTML(data) {
+  let dropdownHTML = `<div class="dropdown">
+      <a href="#">${data.title}</a>
+      <div class="dropdown-content">`;
+
+  function renderSubcategories(subcategories, level) {
+    let subcategoriesHTML = '';
+    subcategories.forEach((subcategory) => {
+      const subcategoryClass = level === 1 ? 'nested-dropdown' : level === 2 ? 'double-nested-dropdown' : 'triple-nested-dropdown';
+      const contentClass = level === 1 ? 'nested-dropdown-content' : level === 2 ? 'double-nested-dropdown-content' : 'triple-nested-dropdown-content';
+
+      subcategoriesHTML += `<div class="${subcategoryClass}">
+                              <a href="products.html#${subcategory.title.toLowerCase().replace(/\s/g, '-')}">${subcategory.title}</a>`;
+
+      if (subcategory.subcategories && subcategory.subcategories.length > 0 && level < 3) {
+        subcategoriesHTML += `<div class="${contentClass}">`;
+        subcategoriesHTML += renderSubcategories(subcategory.subcategories, level + 1);
+        subcategoriesHTML += `</div>`;
+      }
+      subcategoriesHTML += '</div>';
+    });
+    return subcategoriesHTML;
+  }
+
+  dropdownHTML += renderSubcategories(data.subcategories, 1);
+  dropdownHTML += `</div></div>`;
+  return dropdownHTML;
+}
+
+// const data={
+//   "allDropdownItems": [
+//       {
+//           "_id": "6595fbcb7daae84b634b3a1a",
+//           "title": "New Construction Projects",
+//           "subcategories": [
+//               {
+//                   "title": "Concrete Solution",
+//                   "subcategories": [
+//                       {
+//                           "title": "ADMIXTURES"
+//                       },
+//                       {
+//                           "title": "FIBRES"
+//                       }
+//                   ]
+//               },
+//               {
+//                   "title": "Plaster Solution",
+//                   "subcategories": [
+//                       {
+//                           "title": "ADMIXTURES"
+//                       },
+//                       {
+//                           "title": "FIBRES"
+//                       }
+//                   ]
+//               },
+//               {
+//                   "title": "Tile-Fixing Solutions",
+//                   "subcategories": [
+//                       {
+//                           "title": "TILE ADHESIVES",
+//                           "subcategories": [
+//                               {
+//                                   "title": "C1T"
+//                               },
+//                               {
+//                                   "title": "C2TE"
+//                               },
+//                               {
+//                                   "title": "C2TES1"
+//                               },
+//                               {
+//                                   "title": "R2T"
+//                               }
+//                           ]
+//                       },
+//                       {
+//                           "title": "TILE SPACERS"
+//                       },
+//                       {
+//                           "title": "TILE PROTECTION SYSTEMS",
+//                           "subcategories": [
+//                               {
+//                                   "title": "ROLL"
+//                               },
+//                               {
+//                                   "title": "SHEET"
+//                               }
+//                           ]
+//                       }
+//                   ]
+//               }
+//           ],
+//           "__v": 0
+//       }
+//   ]
+// }
+
+app.get("/renderProductsAPI/:title",(req,res)=>{
+  getAllNewProductsAPI(req,res)
+})
+app.get('/renderProducts', async (req, res) => {
+  try {
+    const productsData = await getAllNewProducts();
+
+    console.log(productsData[0]);
+    let htmlResponse=`<div>`;
+    productsData.map((product)=>{
+    htmlResponse += `
+      <div class="sub-title-2" id="${product.title.split(" ").join("-")}">${product.title}</div>
+      <div class="frame-93">
+    `;
+
+    product.products.map(product => {
+      htmlResponse += `
+        <div class="frame-94">
+          <div class="rectangle-612"></div>
+          <div class="frame-91">
+            <div class="image">
+              <div class="rectangle"></div>
+              <img src="${product.productUrl}" alt="${product.productTitle}">
+            </div>
+            <div class="img-title">
+              ${product.productTitle}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    htmlResponse += `
+      </div>
+    `;
+    })
+   
+    htmlResponse+=`</div>`
+
+    res.send(htmlResponse);
+  } catch (error) {
+    console.error('Error retrieving products:', error);
+    res.status(500).send('Failed to retrieve products');
+  }
+});
+
+app.post("/createProduct",(req,res)=>{
+  createNewProduct(req,res);
+})
+
+app.post("/createVideoCard",(req,res)=>{
+  createVideo(req,res);
+})
+
+
+app.get('/', async (req, res) => {
+  try {
+
+    const data = await getDropdownItemsAsFunction();
+    console.log("----------------------\n\n",data)
+    // const data = await response.json();
+
+    let html = '<!DOCTYPE html><html><head><title>Dropdown Items</title></head><body><div class="dropdown">';
+
+    const htmlStructure = generateDropdownHTML(data.allDropdownItems[0]);
+
+
+    html += '</div></body></html>';
+
+    res.send(htmlStructure);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 // app.listen(port, () => {
 //   console.log(`Server is running on http://localhost:${port}`);
 // });
+
 module.exports = app;
