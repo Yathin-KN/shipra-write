@@ -218,7 +218,7 @@ app.post("/createVideoCard",(req,res)=>{
 })
 
 
-app.get('/', async (req, res) => {
+app.get('/dropdown', async (req, res) => {
   try {
 
     const data = await getDropdownItemsAsFunction();
