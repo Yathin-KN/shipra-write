@@ -26,7 +26,6 @@ import {
   ImageIcon,
   List,
   Loader2,
-  PlaySquare,
   Type,
   XSquare,
 } from "lucide-react";
@@ -38,7 +37,7 @@ import clsx from "clsx";
 import Bullet from "@/components/bullet";
 
 const Write = ({selectedCard}:{selectedCard:any}) => {
-  const [which, _] = useState<"product" | "post">(selectedCard);
+  const [which, _] = useState<"prject" | "post">(selectedCard);
   const [compoenent, setComponenet] = useState<any[]>([]);
   const [length, setLength] = useState<number>(0);
   const { blogItems, removeLastBlogItem } = useBlogStore();
@@ -158,13 +157,14 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
   const { mode } = useModeStore();
   return (
     <>
+      
       <div
         className={clsx({
           "bg-white": mode === "light",
           "bg-black": mode === "dark",
         })}
       >
-        {/* <MainNav /> */}
+        
       </div>
       {/* <ToastContainer
         toastClassName={() =>
@@ -180,9 +180,10 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
           }
         )}
       >
+        <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg" className="fixed top-4 left-4"></img>
         <div
           className={clsx(
-            "md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10 mt-[50px] mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",
+            "md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10 mt-[80px] mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",
             {
               "bg-white": mode === "light",
               "bg-black": mode === "dark",
@@ -287,14 +288,6 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
               variant="outline"
             >
               <ImageIcon strokeWidth={1} size={28} />
-            </Button>
-            <Button
-              onClick={() => handleClick("video")}
-              className="border-none shadow-none p-2"
-              name="video"
-              variant="outline"
-            >
-              <PlaySquare size={28} strokeWidth={1} />
             </Button>
 
             <Button

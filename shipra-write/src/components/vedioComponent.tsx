@@ -57,7 +57,7 @@ const VideoComponent = ({ index }: { index: number }) => {
       try {
         setIsLoading(true);
         const response = await axios.post(
-          "https://vcw4zbgl-2000.inc1.devtunnels.ms/api/admin/createUrl",
+          "https://shipra-backend.vercel.app/admin/createUrl",
           formData,
           {
             headers: {
