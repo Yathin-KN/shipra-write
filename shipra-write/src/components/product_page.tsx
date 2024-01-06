@@ -4,8 +4,9 @@ import getAllDropdownItems from "@/apis/getDropdown";
 import postDropdown from "@/apis/updateDropdow";
 import axios from "axios";
 import clsx from "clsx";
-import { Loader2, UploadCloud } from "lucide-react";
+import { ArrowLeftCircle, Loader2, UploadCloud } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface DropdownItem {
   title: string;
@@ -518,15 +519,27 @@ const ProductPage = () => {
     title: "",
   });
   return (
-    <div className="max-w-screen grid grid-cols-6 h-screen">
-      <div className="col-span-2 py-3 pl-3">
-        <Dropdown setMetaData={setMetaData} title={metaData?.id || ""} />
+    <>
+        {/* <Link to={"/home"} className="py-4 px-4 w-screen bg-slate-50 z-50 ">
+           <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg"></img>
+        </Link> */}
 
-      </div>
-      <div className="col-span-4 p-3 ">
-        <ProductUpload metaData={metaData} />
-      </div>
-    </div>
+        <div className="max-w-screen grid grid-cols-6 h-screen">
+     
+     <div className="col-span-2 py-3 pl-3">
+       <Link to={"/home"} className="flex items-center gap-2">
+         <ArrowLeftCircle  className="text-slate-600"/>
+         <p className="text-sm">Home</p>
+       </Link>
+       <Dropdown setMetaData={setMetaData} title={metaData?.id || ""} />
+
+     </div>
+     <div className="col-span-4 p-3 ">
+       <ProductUpload metaData={metaData} />
+     </div>
+   </div>
+    </>
+   
   );
 };
 

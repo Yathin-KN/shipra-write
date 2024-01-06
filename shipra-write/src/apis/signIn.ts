@@ -19,7 +19,8 @@ export const signIn = async (email: string, password: string): Promise<boolean> 
     );
 
     if (response.status === 200) {
-      
+      const { token } = response.data;
+      localStorage.setItem('token', token);
       return true;
     }
   } catch (error) {

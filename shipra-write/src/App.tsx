@@ -1,93 +1,74 @@
 import {useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Write from './components/write';
-import {signIn} from './apis/signin';
+import {signIn} from './apis/signIn';
 //hrllo
+import {  useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
-  const handleClick = (type:any) => {
-    onCardClick(type);
-  };
 
-  return (
-    <div className="flex  items-center gap-8 h-screen  flex-wrap">
-    {/* <div className="flex space-x-4">
-      <div className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" onClick={() => handleClick('product')}>
-        Project
-      </div>
-      <div className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" onClick={() => handleClick('post')}>
-        Blog
-      </div>
-      <Link className="cursor-pointer bg-gray-200 p-4 rounded text-lg font-semibold hover:bg-gray-300" to={"/product"} >
-        Product
-      </Link>
-      h
+// const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
+//   const handleClick = (type:any) => {
+//     onCardClick(type);
+//   };
 
-    </div> */}
-    <div className='flex flex-col'>
-    <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg" className="fixed top-4 left-4"></img>
+//   return (
+//     <div className="flex  items-center gap-8 h-screen  flex-wrap">
+//     <div className='flex flex-col'>
+//     <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg" className="fixed top-4 left-4"></img>
 
-    <div className='flex w-full gap-10'>
+//     <div className='flex w-full gap-10'>
       
-      <div className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out">
-          <div className="relative cursor-pointer" onClick={() => handleClick('post')}>
-            <img
-              src="https://www.buildjahaan.com/public/images/girl-image.png"
-              alt="Blog"
-              className="w-full h-72 object-cover "
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Blog</h2>
-            </div>
-          </div>
-        </div>
+//       <div className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out">
+//           <div className="relative cursor-pointer" onClick={() => handleClick('post')}>
+//             <img
+//               src="https://www.buildjahaan.com/public/images/girl-image.png"
+//               alt="Blog"
+//               className="w-full h-72 object-cover "
+//             />
+//             <div className="absolute inset-0 flex items-center justify-center">
+//               <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Blog</h2>
+//             </div>
+//           </div>
+//         </div>
   
-        <Link to={"/product"} className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out">
-          <div className="relative">
-            <img
-              src="https://blog.hubspot.com/hs-fs/hubfs/what-is-a-blog-3.webp?width=595&height=400&name=what-is-a-blog-3.webp"
-              alt="Product"
-              className="w-full h-72 aspect-square object-cover"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Product</h2>
-            </div>
-          </div>
-        </Link>
+//         <Link to={"/product"} className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out">
+//           <div className="relative">
+//             <img
+//               src="https://blog.hubspot.com/hs-fs/hubfs/what-is-a-blog-3.webp?width=595&height=400&name=what-is-a-blog-3.webp"
+//               alt="Product"
+//               className="w-full h-72 aspect-square object-cover"
+//             />
+//             <div className="absolute inset-0 flex items-center justify-center">
+//               <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Product</h2>
+//             </div>
+//           </div>
+//         </Link>
   
-        <div className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale  hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out cursor-pointer" onClick={() => handleClick('project')}>
-          <div className="relative">
-            <img
-              src="https://www.projectmanager.com/wp-content/uploads/2021/10/211014_Blog_Feature_Project_Environment-scaled.jpg"
-              alt="Project"
-              className="w-full h-72 object-cover  aspect-square"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Project</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
+//         <div className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale  hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out cursor-pointer" onClick={() => handleClick('project')}>
+//           <div className="relative">
+//             <img
+//               src="https://www.projectmanager.com/wp-content/uploads/2021/10/211014_Blog_Feature_Project_Environment-scaled.jpg"
+//               alt="Project"
+//               className="w-full h-72 object-cover  aspect-square"
+//             />
+//             <div className="absolute inset-0 flex items-center justify-center">
+//               <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Project</h2>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       </div>
+//     </div>
     
       
-  );
-};
+//   );
+// };
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading,setIsLoading]=useState<boolean>(false);
-  const [selectedCard, setSelectedCard] = useState('');
-  
-  const handleCardClick = (type: any) => {
-    setSelectedCard(type);
-  };
-
+  const navigate=useNavigate();
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error('Please provide both email and password.');
@@ -99,14 +80,12 @@ function App() {
       const success = await signIn(email, password);
 
       if (success) {
-        setIsLoggedIn(true);
         toast.success('Login successful!');
       } else {
-        setIsLoggedIn(false);
         toast.error('Invalid credentials. Please try again.');
       }
+      navigate("/home")
     } catch (error) {
-      setIsLoggedIn(false);
       toast.error('Something went wrong. Please try again.');
       console.error('Login error:', error);
     }finally{
@@ -114,17 +93,9 @@ function App() {
     }
   };
 
-  return (
-    <div className="h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      {isLoggedIn ? (
-        <div className="w-screen  h-full flex items-center justify-center">
-          {selectedCard ? (
-          <Write selectedCard={selectedCard} />
-        ) : (
-          <ProductPost onCardClick={handleCardClick} />
-        )}
-        </div>
-      ) : (
+  
+    return <>
+     <div className="h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
         <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg" className="fixed top-4 left-4"></img>
@@ -180,10 +151,10 @@ function App() {
             </div>
           </form>
         </div>
-      )}
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
-  );
+    </>
+  
 }
 
 export default App;

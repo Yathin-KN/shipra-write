@@ -14,7 +14,8 @@ interface AllDropdownItemsResponse {
 const getAllDropdownItems = async (): Promise<AxiosResponse<AllDropdownItemsResponse>> => {
   try {
     const response: AxiosResponse<AllDropdownItemsResponse> = await axios.get(
-      "https://shipra-backend.vercel.app/getDropdown" 
+      "https://shipra-backend.vercel.app/getDropdown" ,{
+      }
     );
     return response;
   } catch (error:any) {
