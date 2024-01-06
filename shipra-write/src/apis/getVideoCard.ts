@@ -8,7 +8,7 @@ interface VideoData {
 
 const getVideoCards = async (): Promise<VideoData[]> => {
   try {
-    const response = await axios.get<VideoData[]>('http://localhost:3000/getVideoCards');
+    const response = await axios.get<VideoData[]>('https://shipra-backend.vercel.app/getVideoCards');
     return response.data;
   } catch (error:any) {
     console.error('Error fetching video cards:', error.message);
