@@ -1,4 +1,5 @@
 import createProduct from "@/apis/createProducts";
+import deleteProduct from "@/apis/deleteProduct";
 import getProductsByTitle from "@/apis/getAllProductsByTitle";
 import getAllDropdownItems from "@/apis/getDropdown";
 import postDropdown from "@/apis/updateDropdow";
@@ -311,8 +312,10 @@ const Dropdown = ({
 interface ProductDetail {
   productUrl: string;
   productTitle: string;
+  _id?:string;
 }
 interface Product {
+  _id?:string;
   title: string;
   products: ProductDetail[];
 }
@@ -322,18 +325,19 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
     products: [],
   });
 
-  useEffect(()=>{
-    const fetchData = async () => {
-      if (metaData?.title) {
-        try {
-          const products = await getProductsByTitle(metaData.title);
-          setProductData( products );
-          console.log("check---",products)
-        } catch (error) {
-          console.error('Error fetching product data:', error);
-        }
+  const fetchData = async () => {
+    if (metaData?.title) {
+      try {
+        const products = await getProductsByTitle(metaData.title);
+        setProductData( products );
+        console.log("check---",products)
+      } catch (error) {
+        console.error('Error fetching product data:', error);
       }
-    };
+    }
+  };
+  useEffect(()=>{
+  
 
     fetchData();
   },[metaData?.title])
@@ -425,6 +429,37 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
       }
     }
   };
+
+  const removeProductAtIndex = (index: number) => {
+    if (productData && productData.products.length > index) {
+      const updatedProducts = [...productData.products];
+      updatedProducts.splice(index, 1);
+  
+      setProductData({
+        ...productData,
+        products: updatedProducts,
+      });
+    }
+  };
+  
+
+  const callDeleteProductAPI = async (titleId: string, productId: string): Promise<void> => {
+    try {
+      const result = await deleteProduct(titleId, productId);
+      console.log(result.message);
+      fetchData();
+    } catch (error:any) {
+      console.error(error.message);
+    }
+  };
+  
+  const handleDelete=(productId:string | undefined ,titleId:string | undefined,index:number)=>{
+      if(productId===undefined || titleId===undefined){
+         removeProductAtIndex(index);
+      }else{
+         callDeleteProductAPI(titleId,productId);
+      }
+  }
   return (
     <div className="w-full h-full border rounded-md  ">
       <div
@@ -450,9 +485,10 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
       </div>
       <div className="w-full grid grid-cols-4  flex-grow-0">
         <div className="col-span-3  bottom-0 p-4 flex gap-4">
-          {productData?.products.map((product) => {
+          {productData?.products.map((product,index) => {
             return (
-              <div className="p-4 border rounded-md w-60 h-fit">
+              <div className="p-4 border rounded-md w-60 h-fit relative">
+                <span onClick={()=>handleDelete(product?._id,productData?._id,index)} className="py-1 px-3 borderborder-slate-100 bg-red-500 rounded-full text-xs text-white float-right mb-1 cursor-pointer">Delete</span>
                 <img src={product.productUrl} className="aspect-square"></img>
                 <p className="my-2 text-center font-semibold">
                   {product.productTitle}

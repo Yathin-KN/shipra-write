@@ -5,7 +5,7 @@ interface VideoData {
   videoUrl: string;
 }
 
-const createVideoCard = async (videoData: VideoData): Promise<void> => {
+const createVideoCard = async (videoData: VideoData[]): Promise<void> => {
   try {
     const response = await axios.post('http://localhost:3000/createVideoCard', videoData);
     console.log('Video created:', response.data);
