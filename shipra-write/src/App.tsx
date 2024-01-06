@@ -39,7 +39,7 @@ const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
               className="w-full h-72 object-cover "
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold">Blog</h2>
+              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Blog</h2>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
               className="w-full h-72 aspect-square object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold">Product</h2>
+              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Product</h2>
             </div>
           </div>
         </Link>
@@ -65,7 +65,7 @@ const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
               className="w-full h-72 object-cover  aspect-square"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-lg font-semibold">Project</h2>
+              <h2 className="text-white text-lg font-semibold py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Project</h2>
             </div>
           </div>
         </div>

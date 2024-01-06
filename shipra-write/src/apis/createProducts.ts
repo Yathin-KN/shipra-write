@@ -12,7 +12,7 @@ interface Product {
 
 const createProduct = async (data: Product) => {
     try {
-      const response = await axios.post<Product>('http://localhost:3000/createProduct', data);
+      const response = await axios.post<Product>('https://shipra-backend.vercel.app/createProduct', data);
       console.log('Product created:', response.data);
       return response.data;
     } catch (error:any) {

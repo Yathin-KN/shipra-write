@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 // import cors from 'cors';
 // import adminRoutes from './routes/admin';
-
+const { verifyToken } =require( "./controllers/authControllers");
 const adminRoutes = require("./routes/admin");
 const app = express();
 const port = 3000;
@@ -60,6 +60,10 @@ app.post("/updateDropDown", (req, res) => {
 
 app.get("/getDropdown",(req,res)=>{
   getAllDropdownItems(req,res);
+})
+
+app.post("/authorize",verifyToken,(req,res)=>{
+  res.status(200).json({ message: 'Authorization verified' });
 })
 
 {/* <div class="dropdown">

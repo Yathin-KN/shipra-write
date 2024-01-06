@@ -1,32 +1,25 @@
-// controllers/authController.js
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./../schemas/User');
 
-// Function to handle user sign-up
 exports.signup = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user already exists
     let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create a new user
     user = new User({
       email,
       password,
     });
 
-    // Hash the password before saving it to the database
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
-    // Save the user to the database
     await user.save();
 
     res.status(201).json({ message: 'User registered successfully' });
@@ -36,26 +29,22 @@ exports.signup = async (req, res) => {
   }
 };
 
-// Function to handle user sign-in
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user exists
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Validate the password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Create and return a JWT token upon successful authentication
     const payload = {
       user: {
         id: user.id,
@@ -69,5 +58,30 @@ exports.signin = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
+  }
+};
+
+exports.verifyToken = (req, res, next) => {
+  const token = req.header('Authorization');
+
+  if (!token) {
+    return res.status(401).json({ message: 'Authorization denied. No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'your_jwt_secret');
+    const { exp, user } = decoded;
+
+
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if (currentTime > exp) {
+      return res.status(401).json({ message: 'Token has expired' });
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(401).json({ message: 'Token is not valid' });
   }
 };

@@ -8,7 +8,7 @@ interface DropdownItem {
 const postDropdown = async (data: DropdownItem): Promise<any> => {
   try {
     const response: AxiosResponse<any> = await axios.post(
-      "http://localhost:3000/updateDropDown", 
+      "https://shipra-backend.vercel.app/updateDropDown", 
       data
     );
     return response.data;
