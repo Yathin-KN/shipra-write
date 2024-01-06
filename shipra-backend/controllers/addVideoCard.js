@@ -1,17 +1,20 @@
 const Video=require("../schemas/video")
 
 const createVideo = async (req, res) => {
-    const video = new Video({
-      title: req.body.title,
-      videoUrl: req.body.videoUrl
+  const videos = req.body.map((videoData) => {
+    return new Video({
+      title: videoData.title,
+      videoUrl: videoData.videoUrl,
     });
-  
-    try {
-      const newVideo = await video.save();
-      res.status(201).json(newVideo);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-    }
+  });
+
+  try {
+    await Video.deleteMany({});
+    const newVideos = await Video.insertMany(videos);
+    res.status(201).json(newVideos);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 const getVideos = async (req, res) => {

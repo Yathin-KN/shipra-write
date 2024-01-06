@@ -17,6 +17,7 @@ const { getAllProducts } = require("./controllers/getAllProducts");
 const { addProduct } = require("./controllers/addProducts");
 const { getProductById } = require("./controllers/getProductByProductId");
 const authRoutes = require("./routes/auth");
+const {getVideos}=require("./controllers/getALLVideoCards")
 const {
   createOrUpdateDropdownItems,
 } = require("./controllers/updateDrowpdown1");
@@ -25,6 +26,8 @@ const { createNewProduct } = require("./controllers/addNewProducts");
 const { getAllNewProducts, getAllNewProductsAPI } = require("./controllers/getAllNewProducts");
 const { create } = require("./schemas/video");
 const { createVideo } = require("./controllers/addVideoCard");
+const { deleteProduct } = require("./controllers/deleteProduct");
+const { deleteVideo } = require("./controllers/deleteVideos");
 connect_DB();
 
 console.log(getAllNewProducts())
@@ -64,6 +67,10 @@ app.get("/getDropdown",(req,res)=>{
 
 app.post("/authorize",verifyToken,(req,res)=>{
   res.status(200).json({ message: 'Authorization verified' });
+})
+
+app.delete("/deleteVideo/:id",(req,res)=>{
+  deleteVideo(req,res)
 })
 
 {/* <div class="dropdown">
@@ -170,6 +177,11 @@ function generateDropdownHTML(data) {
 app.get("/renderProductsAPI/:title",(req,res)=>{
   getAllNewProductsAPI(req,res)
 })
+
+app.delete("/deleteProduct/:titleId/:productId",(req,res)=>{
+   deleteProduct(req,res);
+})
+
 app.get('/renderProducts', async (req, res) => {
   try {
     const productsData = await getAllNewProducts();
@@ -221,7 +233,9 @@ app.post("/createVideoCard",(req,res)=>{
   createVideo(req,res);
 })
 
-
+app.get("/getVideoCards",(req,res)=>{
+  getVideos(req,res)
+})
 app.get('/dropdown', async (req, res) => {
   try {
 
@@ -245,8 +259,8 @@ app.get('/dropdown', async (req, res) => {
 });
 
 
-// app.listen(port, () => {
-//   console.log(`Server is running on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
-module.exports = app;
+// module.exports = app;
