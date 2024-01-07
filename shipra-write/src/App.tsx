@@ -5,7 +5,7 @@ import {signIn} from './apis/signIn';
 //hrllo
 import {  useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
-
+import ShipraLogo from "./assets/Shipra_logo.svg"
 // const ProductPost = ({ onCardClick }:{onCardClick:any}) => {
 //   const handleClick = (type:any) => {
 //     onCardClick(type);
@@ -98,7 +98,7 @@ function App() {
      <div className="h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-        <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg" className="fixed top-4 left-4"></img>
+        <img src={ShipraLogo} className="fixed top-4 left-4"></img>
 
             <h2 className="text-center text-3xl font-bold ">Login</h2>
           </div>

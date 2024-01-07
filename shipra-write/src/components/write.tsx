@@ -35,8 +35,133 @@ import { toast } from "react-toastify";
 import useModeStore from "@/store/mode";
 import clsx from "clsx";
 import Bullet from "@/components/bullet";
+import { getAllPostDetails } from "@/apis/getAllPostDetails";
+import deletePostById from "@/apis/deletPostById";
+import { getAllProjectDetails } from "@/apis/getAllProjects";
+import deleteProjectById from "@/apis/deleteProjectById";
 
-const Write = ({selectedCard}:{selectedCard:any}) => {
+// HamburgerMenu.tsx
+
+interface PostDetails {
+  post_id: string;
+  postDetails: {
+    postTitle: string;
+    postImage: string;
+  };
+}
+
+const HamburgerMenu = ({ type }: { type: "project" | "post" }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const [data, setData] = useState<PostDetails[]>([]);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const response = await getAllPostDetails();
+      setData(response);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await getAllProjectDetails();
+      setData(response);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const handleDeletePost=async (id:string)=>{
+    if(type==="post"){
+      try {
+        await deletePostById(id);
+        fetchPosts();
+      } catch (err: any) {
+        console.log(err);
+      }
+    }else{
+      try {
+        await deleteProjectById(id);
+        fetchProjects();
+      } catch (err: any) {
+        console.log(err);
+      }
+    }
+   
+  }
+  const handleDelete=(id:string)=>{
+      handleDeletePost(id);
+  }
+  useEffect(() => {
+   
+    if (type == "post") {
+      fetchPosts();
+    }else{
+       fetchProjects();
+    }
+  }, []);
+  return (
+    <div className="fixed top-0 right-0 p-4">
+      <button
+        className="block  text-gray-800 focus:outline-none"
+        onClick={toggleMenu}
+      >
+        <svg
+          className="w-6 h-6 fill-current relative z-50"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {isOpen ? (
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm16 4H4v2h16v-2z"
+            />
+          ) : (
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"
+            />
+          )}
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="absolute top-0 right-0 w-60 bg-white  border mx-4 mt-10">
+          <div className="space-y-4 p-3 h-[80vh] overflow-y-auto  scrollbar-rounded scrollbar-thumb-slate-400 scrollbar-thin scrollbar-track-gray-100">
+            {data.length > 0 &&
+              data.map((post, index) => {
+                return (
+                  <>
+               
+
+                    <div className="px-2 py-1 border" key={index.toString()}>
+                    <span  className="py-1 px-3 border border-slate-100 bg-red-500 rounded-full text-xs text-white float-right cursor-pointer" onClick={()=>handleDelete(post.post_id)}>Delete</span>
+                      <img
+                        src={post.postDetails.postImage}
+                        className="w-full aspect-video "
+                      ></img>
+                      <p className="text-sm py-4">
+                        {post.postDetails.postTitle}
+                      </p>
+                    </div>
+                  </>
+                );
+              })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Write = ({ selectedCard }: { selectedCard: any }) => {
   const [which, _] = useState<"project" | "post">(selectedCard);
   const [compoenent, setComponenet] = useState<any[]>([]);
   const [length, setLength] = useState<number>(0);
@@ -107,7 +232,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
   };
 
   const handleSubmit = async () => {
-     if(which==="post"){
+    if (which === "post") {
       try {
         setIsLoading(true);
         const response = await PTSetPost({
@@ -126,7 +251,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
       } finally {
         setIsLoading(false);
       }
-     }else{
+    } else {
       try {
         setIsLoading(true);
         const response = await PTSetProduct({
@@ -145,7 +270,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
       } finally {
         setIsLoading(false);
       }
-     }
+    }
   };
   useEffect(() => {
     setLength(() => {
@@ -157,15 +282,15 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
   const { mode } = useModeStore();
   return (
     <>
-      
+      <div className="relative z-40 ">
+        <HamburgerMenu type={which} />
+      </div>
       <div
         className={clsx({
           "bg-white": mode === "light",
           "bg-black": mode === "dark",
         })}
-      >
-        
-      </div>
+      ></div>
       {/* <ToastContainer
         toastClassName={() =>
           " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-white text-gray-800 text-sm p-4 m-4"
@@ -182,7 +307,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
       >
         <div
           className={clsx(
-            "md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10 mt-[80px] mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",
+            "md:w-[80%] w-[95%] h-auto min-h-[100vh]md:px-10 py-10  mb-[100px] flex flex-col relative rounded-md px-2 border-x-[1px] border-gray-800",
             {
               "bg-white": mode === "light",
               "bg-black": mode === "dark",
@@ -219,12 +344,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
                     ) : null}{" "}
                     Publish
                   </Button>
-                  {/* <ToggleGroup type="single">
-                  <ToggleGroupItem value="product" onClick={()=>handelToggle("product")}>product</ToggleGroupItem>
-                  <ToggleGroupItem value="post"  onClick={()=>handelToggle("post")}>post</ToggleGroupItem>
-                </ToggleGroup> */}
                 </div>
-                
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -237,7 +357,7 @@ const Write = ({selectedCard}:{selectedCard:any}) => {
 
           <div
             className={clsx(
-              "sm:hidden fixed bottom-0 left-0 w-full py-2  border border-white  flex justify-evenly md:flex md:justify-around items-center",
+              "sm:hidden fixed bottom-0 left-0 w-full py-2  border-slate-200 border-x-0 border-b-0  flex justify-evenly md:flex md:justify-around items-center border  ",
               {
                 "bg-white": mode === "light",
                 "bg-black": mode === "dark",

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom"
 import Write from "./write"
-
+import ShipraLogo from "../assets/Shipra_logo.svg"
 const Blog = () => {
   return (
     <div>
-        <Link to={"/home"} className="py-4 px-4 w-screen bg-slate-50 z-50 fixed">
-           <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg"></img>
+        <Link to={"/home"} className=" w-screen">
+           <img src={ShipraLogo} className="px-4 py-4"></img>
         </Link>
         <Write selectedCard={"post"}/>
     </div>
