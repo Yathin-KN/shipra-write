@@ -28,6 +28,10 @@ const { create } = require("./schemas/video");
 const { createVideo } = require("./controllers/addVideoCard");
 const { deleteProduct } = require("./controllers/deleteProduct");
 const { deleteVideo } = require("./controllers/deleteVideos");
+const { getAllPostDetails } = require("./controllers/getAllPostDetails");
+const { deletePostByPostId } = require("./controllers/deletePost");
+const { getAllProjectDetails } = require("./controllers/getAllProductDetails");
+const { deleteProjectByPostId } = require("./controllers/deleteProjectById");
 connect_DB();
 
 console.log(getAllNewProducts())
@@ -263,6 +267,24 @@ app.post("/createVideoCard",(req,res)=>{
 app.get("/getVideoCards",(req,res)=>{
   getVideos(req,res)
 })
+
+app.get("/postDetails",(req,res)=>{
+  getAllPostDetails(req,res);
+})
+
+app.delete("/deletePost/:post_id",(req,res)=>{
+   deletePostByPostId(req,res);
+})
+
+app.delete("/deleteProject/:project_id",(req,res)=>{
+    deleteProjectByPostId(req,res);
+})
+
+
+app.get("/projectDetails",(req,res)=>{
+  getAllProjectDetails(req,res)
+})
+
 app.get('/dropdown', async (req, res) => {
   try {
 
@@ -286,8 +308,8 @@ app.get('/dropdown', async (req, res) => {
 });
 
 
-// app.listen(port, () => {
-//   console.log(`Server is running on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
-module.exports = app;
+// module.exports = app;
