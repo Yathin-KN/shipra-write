@@ -9,6 +9,18 @@ const getVideos = async (req, res) => {
     }
 };
 
+
+const getVideosFE = async () => {
+  try {
+    const videos = await Video.find();
+    return videos;
+  } catch (err) {
+    console.error('Error fetching videos:', err.message);
+    return [];
+  }
+};
+
 module.exports = {
     getVideos,
+    getVideosFE
   };

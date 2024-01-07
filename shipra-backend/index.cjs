@@ -17,7 +17,7 @@ const { getAllProducts } = require("./controllers/getAllProducts");
 const { addProduct } = require("./controllers/addProducts");
 const { getProductById } = require("./controllers/getProductByProductId");
 const authRoutes = require("./routes/auth");
-const {getVideos}=require("./controllers/getALLVideoCards")
+const {getVideos, getVideosFE}=require("./controllers/getALLVideoCards")
 const {
   createOrUpdateDropdownItems,
 } = require("./controllers/updateDrowpdown1");
@@ -73,6 +73,33 @@ app.delete("/deleteVideo/:id",(req,res)=>{
   deleteVideo(req,res)
 })
 
+app.get("/getVideoCardsFE",async (req,res)=>{
+  try {
+    const videos = await getVideosFE();
+
+    const html = videos.map((video, index) => `
+      <span id="popup-button${index + 1}" class="play-button" data-video-id="${video.videoUrl}">
+        <div class="frame-95">
+          <div class="frame-99">
+            <div class="image0">
+              <div class="rectangle0"></div>
+            </div>
+            <div class="img-title">
+              ${video.title}
+            </div>
+          </div>
+        </div>
+      </span>
+    `).join('');
+
+
+
+    res.send(html);
+  } catch (error) {
+    console.error('Error fetching videos:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 {/* <div class="dropdown">
 <a href="#">New Construction Projects</a> */}
 function generateDropdownHTML(data) {
@@ -259,8 +286,8 @@ app.get('/dropdown', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
 
-// module.exports = app;
+module.exports = app;
