@@ -461,7 +461,7 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
       }
   }
   return (
-    <div className="w-full h-full border rounded-md  ">
+    <div className="w-full h-full border rounded-md   ">
       <div
         className="py-1 px-3 rounded-full cursor-pointer bg-blue-500 font-bold text-white absolute top-4 right-4 text-sm flex gap-3 items-center border"
         onClick={() => allUpload()}
@@ -472,7 +472,7 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
 
       <div
         className={clsx(
-          "text-4xl font-extrabold my-6 text-center uppercase flex flex-col",
+          "text-4xl font-extrabold my-6 text-center uppercase flex flex-col ",
           {
             "text-slate-200": metaData?.title === "",
           }
@@ -483,11 +483,11 @@ const ProductUpload = ({ metaData }: { metaData: MetaData | null }) => {
       <div className="text-3xl font-semibold text-center uppercase">
         {metaData?.subtitle}
       </div>
-      <div className="w-full grid grid-cols-4  flex-grow-0">
+      <div className="w-full grid grid-cols-1 md:grid-cols-4  flex-grow-0">
         <div className="col-span-3  bottom-0 p-4 flex gap-4">
           {productData?.products.map((product,index) => {
             return (
-              <div className="p-4 border rounded-md w-60 h-fit relative">
+              <div className="p-4 border rounded-md w-60 h-fit relative mx-auto md:mx-0">
                 <span onClick={()=>handleDelete(product?._id,productData?._id,index)} className="py-1 px-3 borderborder-slate-100 bg-red-500 rounded-full text-xs text-white float-right mb-1 cursor-pointer">Delete</span>
                 <img src={product.productUrl} className="aspect-square"></img>
                 <p className="my-2 text-center font-semibold">
@@ -560,9 +560,9 @@ const ProductPage = () => {
            <img src="https://6596b5a88f29e103c1024276--cool-macaron-1a73d4.netlify.app/images/Shipra_logo.svg"></img>
         </Link> */}
 
-        <div className="max-w-screen grid grid-cols-6 h-screen">
+        <div className="max-w-screen grid grid-cols-1 md:grid-cols-6 h-screen">
      
-     <div className="col-span-2 py-3 pl-3">
+     <div className="col-span-2 py-8 md:py-3 pl-3">
        <Link to={"/home"} className="flex items-center gap-2">
          <ArrowLeftCircle  className="text-slate-600"/>
          <p className="text-sm">Home</p>

@@ -118,53 +118,26 @@ const Video = () => {
            <img src={ShipraLogo} className="px-4" ></img>
            
       </Link>
-      <div className="grid grid-cols-2 ">
-      
-      <div className="col-span-1 ">
-      <h2 className="text-xl mb-4 text-center">Uploaded Videos</h2>
-      <div className="px-6  space-y-3 py-3">
-      {videosArray.map((video, index) => (
-            <div key={index} className="border rounded-sm p-1 flex gap-4">
-              <div>
-              {/* <video controls className="mt-2 w-[600px]">
-                <source src={""} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video> */}
-            
-              <iframe className="mt-2 w-[300px]" src={video.videoUrl}>
-
-              </iframe>
-              </div>
-              <div className="py-2 space-y-3 relative">
-              <p className=" text-sm flex gap-1"><p>Title :</p><p>{video.title}</p></p>
-              <p className=" text-sm gap-1"><p>Video url :</p><p>{video.videoUrl}</p></p>
-              <span onClick={()=>handleDelete(video?._id,index)} className="py-1 px-3 borderborder-slate-100 bg-red-500 rounded-full text-xs text-white float-right mb-1 cursor-pointer  absolute bottom-0 right-2">Delete</span>
-              </div>
-              
-            </div>
-          ))}
-      </div>
-      </div>
-
-      <div className="  col-span-1 relative">
+      <div className=" w-screen grid grid-cols-1 md:grid-cols-2  ">
+      <div className="  col-span-1 relative md:p-4">
         <h2 className="text-xl mb-4 text-center">Upload New Video</h2>
-        <div className="flex gap-4  mt-6">
-          <div>
+        <div className="flex flex-col md:flex-row gap-4  mt-6">
+          <div className="flex flex-col">
             {videoPreview ? (
-              <div className="mb-4">
+              <div className=" w-full px-4">
                 <p>Video Preview:</p>
-                <video controls width="600" height="240">
+                <video controls height="240" className="w-[400px] md:w-[600px]">
                   <source src={videoPreview} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
             ) : (
-              <div className="w-[400px] h-[240px] bg-slate-200"></div>
+              <div className="w-[370px] mx-auto rounded-md md:w-[400px]  h-[240px]  bg-slate-200"></div>
             )}
           </div>
-          <div>
+          <div className="px-3">
           {uploadedUrl && (
-                <div className="mb-4">
+                <div className="mb-4 ">
                   <p className="text-sm"><p className="font-semibold">Uploaded URL:</p> {uploadedUrl}</p>
                 </div>
               )}
@@ -207,7 +180,7 @@ const Video = () => {
               </button>
              
               {(videosArray.length) > initialNum && (
-                <div className="absolute top-0 right-4">
+                <div className="fixed top-4 md:absolute md:top-0 right-4">
                   <button
                     type="button"
                     onClick={() => handleUploadAll()}
@@ -221,6 +194,34 @@ const Video = () => {
           </div>
         </div>
       </div>
+      <div className="col-span-1 p-4">
+      <h2 className="text-xl mb-4 text-center">Uploaded Videos :</h2>
+      {videosArray.length==0 && <p className="text-center text-red-600">No videos</p>}
+      <div className=" space-y-3 py-3 ">
+      {videosArray.map((video, index) => (
+            <div key={index} className="border rounded-sm p-1 md:flex gap-4">
+              <div className="">
+              {/* <video controls className="mt-2 w-[600px]">
+                <source src={""} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video> */}
+            
+              <iframe className="mt-2 w-[300px] mx-auto" src={video.videoUrl}>
+
+              </iframe>
+              </div>
+              <div className="py-2 space-y-3 relative ">
+              <p className=" text-sm flex gap-1"><p>Title :</p><p>{video.title}</p></p>
+              <p className=" text-sm gap-1"><p>Video url :</p><p>{video.videoUrl}</p></p>
+              <span onClick={()=>handleDelete(video?._id,index)} className="py-1 px-3 borderborder-slate-100 bg-red-500 rounded-full text-xs text-white float-right mb-1 cursor-pointer  absolute bottom-0 right-2 ">Delete</span>
+              </div>
+              
+            </div>
+          ))}
+      </div>
+      </div>
+
+      
     </div>
     </>
     
@@ -228,4 +229,4 @@ const Video = () => {
 };
 
 export default Video;
-``;
+

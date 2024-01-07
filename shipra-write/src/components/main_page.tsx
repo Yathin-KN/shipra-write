@@ -9,9 +9,9 @@ const Main_page = () => {
   return (
     <div className="flex  items-center gap-8 h-screen  flex-wrap w-screen  justify-center">
     <div className='flex flex-col'>
-    <img src={ShipraLogo} className="fixed top-4 left-4"></img>
+    <img src={ShipraLogo} className="h-[3rem] my-3"></img>
 
-    <div className='flex w-full gap-10'>
+    <div className='flex flex-col  md:flex-row w-full gap-10 py-4'>
       
       <Link to={"/blog"} className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out">
           <div className="relative cursor-pointer">
