@@ -3,7 +3,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Product_page from "./components/product_page.tsx";
-import Video from "./components/video_upload.tsx";
 import Main_page from "./components/main_page.tsx";
 import Blog from "./components/Blog.tsx";
 import Project from "./components/Project.tsx";
