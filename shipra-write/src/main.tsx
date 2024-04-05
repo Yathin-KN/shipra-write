@@ -46,7 +46,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <Routes>
     <Route path="/" element={<App />} />
     <Route path="/product" element={<ProtectedRoute element={<Product_page />}  />} />
-    <Route path="/video_cards" element={<ProtectedRoute element={<Video />}  />} />
     <Route path="/home" element={<ProtectedRoute element={<Main_page />}  />} />
     <Route path="/blog" element={<ProtectedRoute element={<Blog />} />} />
     <Route path="/project" element={<ProtectedRoute element={<Project />}  />} />
