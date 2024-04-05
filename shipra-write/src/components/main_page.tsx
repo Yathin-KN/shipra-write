@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Video from "./../assets/video-icon.png"
 import Project from "./../assets/project.jpg"
 import Post from "./../assets/post-img.jpeg"
 import Product from "./../assets/product.png"
