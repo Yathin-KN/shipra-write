@@ -51,18 +51,7 @@ const Main_page = () => {
             </div>
           </div>
         </Link>
-        <Link to={"/video_cards"} className="max-w-xs bg-gray-200 rounded-lg shadow-sm filter grayscale  hover:filter-none hover:grayscale-0 transition duration-300 ease-in-out cursor-pointer" >
-          <div className="relative">
-            <img
-              src={Video}
-              alt="Project"
-              className="w-full h-72 object-cover  aspect-square"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h2 className="text-white text-md   py-1 px-3 rounded-full bg-black backdrop-opacity-40 w-[100px] text-center">Video</h2>
-            </div>
-          </div>
-        </Link>
+       
       </div>
       </div>
     </div>
